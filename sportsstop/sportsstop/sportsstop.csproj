@@ -5,18 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\**" />
-    <Content Remove="wwwroot\**" />
-    <EmbeddedResource Remove="wwwroot\**" />
-    <None Remove="wwwroot\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Areas\wwwroot\Controllers\" />
     <Folder Include="Areas\wwwroot\Data\" />
     <Folder Include="Areas\wwwroot\Models\" />
     <Folder Include="Areas\wwwroot\Views\" />
     <Folder Include="Models\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
