@@ -11,5 +11,6 @@ namespace sportsstop.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
+
     }
 }
