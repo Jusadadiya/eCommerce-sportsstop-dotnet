@@ -16,12 +16,18 @@ namespace sportsstop.Models
         public string Postal { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
-        public string Status { get; set; }
         public decimal SubTotal { get; set; }
         public decimal Tax { get; set; }
         public decimal ShippingCost { get; set; }
         public decimal TotalPrice { get; set; }
         public DateTime OrderDate { get; set; }
         public virtual ICollection<OrderItem> OrderItems { get; set; }
+
+        public int UserId { get; set; }
+
+        public Order()
+        {
+            this.OrderItems = new List<OrderItem>();
+        }
     }
 }
