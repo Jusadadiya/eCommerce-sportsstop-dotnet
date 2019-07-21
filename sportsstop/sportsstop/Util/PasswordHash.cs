@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 //the original is more flexible in that it supports other random number generators and 
 //multiple formats and algorithms. This one is hard coded to one format.
 
-namespace sportsstop.Utils
+namespace sportsstop.Util
 {
     static public class PasswordHash
     {

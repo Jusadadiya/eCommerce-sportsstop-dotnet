@@ -14,10 +14,13 @@ namespace sportsstop.Models
         public string Description { get; set; }
         public string ImagePath { get; set; }
         public decimal Price { get; set; }
-        public decimal Weight { get; set; }
         public int Quantity { get; set; }
         public decimal Tax { get; set; }
         public decimal ShippingCost { get; set; }
         public decimal TotalPrice { get; set; }
+
+        [ForeignKey("Order")]
+        public int OrderId { get; set; }
+        public Order Order { get; set; }
     }
 }

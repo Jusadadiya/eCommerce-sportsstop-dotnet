@@ -12,7 +12,6 @@ namespace sportsstop.Models
         public string Description { get; set; }
         public string ImagePath { get; set; }
         public decimal Price { get; set; }
-        public decimal Weight { get; set; }
         public decimal StockQty { get; set; }
         public decimal Tax { get; set; }
         public decimal ShippingCost { get; set; }

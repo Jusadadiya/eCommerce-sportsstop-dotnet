@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using eCommerceCore.Models;
+using sportsstop.Models;
 using Microsoft.EntityFrameworkCore;
-using eCommerceCore.Utils;
+using sportsstop.Util;
 
 namespace eCommerceCore.Controllers
 {
@@ -19,15 +19,15 @@ namespace eCommerceCore.Controllers
         //private readonly ILogger logger;
 
 
-    public UsersController(
-       //ILogger<ProductController> logger,
-       AppDbContext appDbContext
-    )
-    {
+        public UsersController(
+           //ILogger<ProductController> logger,
+           AppDbContext appDbContext
+        )
+        {
             //this.logger = logger;
             response = new ResponseObject();
-        this.context = appDbContext;
-    }
+            this.context = appDbContext;
+        }
 
         // GET: api/Users
         [HttpGet]
@@ -56,7 +56,7 @@ namespace eCommerceCore.Controllers
             }*/
             try
             {
-                
+
                 //if (userId != 0)
                 {
                     //user = await context.Users.SingleOrDefaultAsync<User>(c => c.Id == id);
@@ -65,11 +65,11 @@ namespace eCommerceCore.Controllers
                                 .Select(p => new User
                                 {
                                     Id = p.Id,
-                                    FirstName=p.FirstName,
+                                    FirstName = p.FirstName,
                                     IsRegistered = p.IsRegistered
                                 })
                                 .SingleOrDefaultAsync();
-                                
+
                     /*filteredUser.Id = user.Id;
                     filteredUser.FirstName = user.FirstName;
                     filteredUser.LastName = user.LastName;
@@ -78,19 +78,26 @@ namespace eCommerceCore.Controllers
                     filteredUser.IsRegistered = user.IsRegistered;
                     filteredUser.Telephone = user.Telephone;*/
                 }
-                response.SetContent(true, "Single User returned ");
-                List<User> userList = new List<User>();
-                userList.Add(user);
-                response.Data = userList.ToList<object>();
+
+                if (user != null)
+                {
+                    List<User> userList = new List<User> { user };
+                    response.SetContent(true, "Single User returned ", userList.ToList<object>());
+                }
+                else
+                {
+                    response.SetContent(false, "User not found");
+                }
+
                 //response.Data = usersList.ToList<object>();
                 return response;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 response.SetContent(false, ex.Message);
                 return response;
             }
-            
+
         }
 
         // POST: api/Users
@@ -110,12 +117,18 @@ namespace eCommerceCore.Controllers
                     context.Users.Add(newUser);
                     await context.SaveChangesAsync();
                     response.SetContent(true, "User Inserted Successfully");
-                    List<User> userList = new List<User>{newUser};
-                    response.Data = userList.ToList<object>();
+                    //List<User> userList = new List<User>{newUser};
+                    //response.Data = userList.ToList<object>();
+
+                    Cart userCart = new Cart();
+                    userCart.UserId = newUser.Id;
+                    context.Carts.Add(userCart);
+                    await context.SaveChangesAsync();
 
                     await HttpContext.Session.LoadAsync();
                     HttpContext.Session.SetInt32("IsLoggedIn", 1);
                     HttpContext.Session.SetInt32("UserID", newUser.Id);
+                    HttpContext.Session.SetInt32("CartID", userCart.Id);
                     await HttpContext.Session.CommitAsync();
 
                     return response;
@@ -126,9 +139,9 @@ namespace eCommerceCore.Controllers
                     return response;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                response.SetContent(false, "EX: "+ex.Message+ " INNER EX:"+ex.InnerException);
+                response.SetContent(false, "EX: " + ex.Message + " INNER EX:" + ex.InnerException);
                 return response;
             }
         }
@@ -138,7 +151,7 @@ namespace eCommerceCore.Controllers
         public async Task<ResponseObject> Put(int id, [FromBody] User userToUpdate)
         {
             List<User> usersList = new List<User>();
-            
+
             await HttpContext.Session.LoadAsync();
             var userId = HttpContext.Session.GetInt32("UserID") ?? id;
 
@@ -157,19 +170,19 @@ namespace eCommerceCore.Controllers
                     entity.Password = PasswordHash.HashPassword(userToUpdate.Password);
 
                     context.Users.Update(entity);
-                    context.SaveChanges();
+                    await context.SaveChangesAsync();
                     response.SetContent(true, "Updated Successfully");
 
                     List<User> userList = new List<User> { entity };
                     response.Data = userList.ToList<object>();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 response.SetContent(false, ex.Message);
                 return response;
             }
-            
+
             return response;
         }
 
@@ -194,17 +207,20 @@ namespace eCommerceCore.Controllers
                 {
                     userId = id;
                     entity = await context.Users
-                                    .Where(u => u.Id == userId)
-                                    .Where(e=> e.IsRegistered == false)
+                                    .Where(u => u.Id == id)
+                                    .Where(e => e.IsRegistered == false)
                                     .SingleOrDefaultAsync();
+                    context.Users.Remove(entity);
+                    response.SetContent(true, "Deleted Successfully");
+                    return response;
                 }
-                
+
                 response.SetContent(false, "Failed to Delete account. Could not locate account");
 
                 if (entity != null)
                 {
-                    context.Remove(entity);
-                    context.SaveChanges();
+                    context.Users.Remove(entity);
+                    await context.SaveChangesAsync();
                     response.SetContent(true, "Deleted Successfully");
                     await HttpContext.Session.LoadAsync();
                     HttpContext.Session.SetInt32("UserID", 0);

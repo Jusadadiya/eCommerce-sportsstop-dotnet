@@ -21,5 +21,13 @@ namespace sportsstop.Models
         public decimal TotalPrice { get; set; }
         public virtual ICollection<CartItem> CartItems { get; set; }
 
+        public Cart()
+        {
+            SubTotal = 0;
+            Tax = 0;
+            ShippingCost = 0;
+            TotalPrice = 0;
+            CartItems = new List<CartItem>();
+        }
     }
 }

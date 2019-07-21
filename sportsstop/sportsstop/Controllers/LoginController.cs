@@ -4,13 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using eCommerceCore.Models;
-using eCommerceCore.Utils;
+using sportsstop.Models;
+using sportsstop.Util;
 using Microsoft.EntityFrameworkCore;
 
-namespace eCommerceCore.Controllers
+namespace sportsstop.Controllers
 {
-
     public class Login
     {
         public string Email { get; set; }
@@ -37,10 +36,10 @@ namespace eCommerceCore.Controllers
         }
 
         // GET: api/Login/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("{id}")]
+        public string Get(string id)
         {
-            return "value";
+            return PasswordHash.HashPassword(id);
         }
 
         // POST: api/Login
@@ -53,18 +52,26 @@ namespace eCommerceCore.Controllers
             {
                 userCount = await context.Users
                                 .Where(u => u.Email == login.Email)
-                                .Where(u => u.Password == passhash)
+                                .Where(u => PasswordHash.VerifyHashedPassword(u.Password, login.Password))
                                 .SingleOrDefaultAsync();
 
-                if(userCount.Id != 0)
+                if (userCount != null)
                 {
+
+                    Cart cart = await context.Carts
+                    .Where(u => u.UserId == userCount.Id)
+                    .Include(c => c.CartItems)
+                    .SingleOrDefaultAsync();
+
                     await HttpContext.Session.LoadAsync();
                     HttpContext.Session.SetInt32("IsLoggedIn", 1);
                     HttpContext.Session.SetInt32("UserID", userCount.Id);
+                    HttpContext.Session.SetInt32("CartID", (cart.Id != 0) ? cart.Id : 0);
                     await HttpContext.Session.CommitAsync();
-
+                   
                     response.SetContent(true, "Login Successful");
                     return response;
+                   
                 }
                 else
                 {
@@ -72,9 +79,9 @@ namespace eCommerceCore.Controllers
                     return response;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                response.SetContent(false, "Fail to Login");
+                response.SetContent(false, ex.Message);
                 return response;
             }
         }
@@ -86,9 +93,17 @@ namespace eCommerceCore.Controllers
         }
 
         // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public async Task<ResponseObject> Delete()
         {
+            await HttpContext.Session.LoadAsync();
+            HttpContext.Session.SetInt32("IsLoggedIn", 0);
+            HttpContext.Session.SetInt32("UserID", 0);
+            HttpContext.Session.SetInt32("CartID", 0);
+            await HttpContext.Session.CommitAsync();
+
+            response.SetContent(true, "Logout successfully");
+            return response;
         }
     }
 }
