@@ -1,0 +1,942 @@
+{
+	"info": {
+		"_postman_id": "c97d13e3-dd48-4e25-aedd-62d88c5c6ef8",
+		"name": "NetCore ecommerce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3db7b083-e0bb-4639-9120-ae928d4ae450",
+						"exec": [
+							"pm.test(\"Login with valid creadentails\", function () { \r",
+							"     var json = pm.response.json();\r",
+							"     pm.expect(json.status).to.equal(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "   {\n            \"email\": \"anonymous@gmail.com\",\n            \"password\": \"asd\"\n   \t\n   }"
+				},
+				"url": {
+					"raw": "http://localhost:59558/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "59558",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change Password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "62dd45d8-4d4a-47b1-af8b-aaeaa41dcbff",
+						"exec": [
+							"pm.test(\"Check Status if you save password successfully\", function () { \r",
+							"     var json = pm.response.json();\r",
+							"     pm.expect(json.status).to.equal(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "   {\n            \"email\": \"anonymous@gmail.com\",\n            \"password\": \"asd\"\n   \t\n   }"
+				},
+				"url": {
+					"raw": "http://localhost:59558/api/changePassword",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "59558",
+					"path": [
+						"api",
+						"changePassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Detail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6b1322a8-49b1-4555-890c-50ce9b8462d9",
+						"exec": [
+							"pm.test(\"Check Status\", function () { \r",
+							"     var json = pm.response.json();\r",
+							"     pm.expect(json.status).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get User Detail\", function () { \r",
+							"     var json = pm.response.json();\r",
+							"     pm.expect(json.data.email).to.equal(\"anonymous@gmail.com\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:59558/api/user/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "59558",
+					"path": [
+						"api",
+						"user",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User Detail All",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6b1322a8-49b1-4555-890c-50ce9b8462d9",
+						"exec": [
+							"pm.test(\"Check Status\", function () { \r",
+							"     var json = pm.response.json();\r",
+							"     pm.expect(json.status).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get User Detail\", function () { \r",
+							"     var json = pm.response.json();\r",
+							"     pm.expect(json.data[0].email).to.equal(\"anonymous@gmail.com\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:59558/api/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "59558",
+					"path": [
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save User Detail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f381a9d7-98e3-403e-9828-92380eeb55a0",
+						"exec": [
+							"pm.test(\"Check Status if you add existing user\", function () { \r",
+							"     var json = pm.response.json();\r",
+							"     pm.expect(json.status).to.equal(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"email\": \"bhavikpatel@gmail.com\",\n        \"username\": \"hyujj\",\n        \"password\": \"asd\",\n        \"addressLine1\": \"asd\",\n        \"addressLine2\": \"asd\",\n        \"city\": \"asd\",\n        \"state\": \"asd\",\n        \"country\": \"asd\"\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:59558/api/user/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "59558",
+					"path": [
+						"api",
+						"user",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User Detail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f9bd5ac4-1a56-42fd-bf67-af66accd0048",
+						"exec": [
+							"pm.test(\"Check Status if you update user detail successfully\", function () { \r",
+							"     var json = pm.response.json();\r",
+							"     pm.expect(json.status).to.equal(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"email\": \"bhavikpatel5@gmail.com\",\n        \"username\": \"asd\",\n        \"password\": \"asd\",\n        \"addressLine1\": \"asd\",\n        \"addressLine2\": \"asd\",\n        \"city\": \"asd\",\n        \"state\": \"asd\",\n        \"country\": \"asd\"\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:59558/api/user/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "59558",
+					"path": [
+						"api",
+						"user",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User Detail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6b1322a8-49b1-4555-890c-50ce9b8462d9",
+						"exec": [
+							"pm.test(\"Check Status\", function () { \r",
+							"     var json = pm.response.json();\r",
+							"     pm.expect(json.status).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get User Detail\", function () { \r",
+							"     var json = pm.response.json();\r",
+							"     pm.expect(json.data).to.equal(null);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:59558/api/user/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "59558",
+					"path": [
+						"api",
+						"user",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6b1322a8-49b1-4555-890c-50ce9b8462d9",
+						"exec": [
+							"pm.test(\"Check Status\", function () { \r",
+							"     var json = pm.response.json();\r",
+							"     pm.expect(json.status).to.equal(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:59558/api/products/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "59558",
+					"path": [
+						"api",
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product All",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6b1322a8-49b1-4555-890c-50ce9b8462d9",
+						"exec": [
+							"pm.test(\"Check Status\", function () { \r",
+							"     var json = pm.response.json();\r",
+							"     pm.expect(json.status).to.equal(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:59558/api/products/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "59558",
+					"path": [
+						"api",
+						"products",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f9bd5ac4-1a56-42fd-bf67-af66accd0048",
+						"exec": [
+							"pm.test(\"Check Status if you update user detail successfully\", function () { \r",
+							"     var json = pm.response.json();\r",
+							"     pm.expect(json.status).to.equal(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n        \"name\": \"Laptop2\",\n        \"description\": \"laptop\",\n        \"image\": null,\n        \"price\": 1000,\n        \"shippingCost\": 10\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:59558/api/products/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "59558",
+					"path": [
+						"api",
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bf331046-0f58-4346-9a6d-aca6f1614d9b",
+						"exec": [
+							"pm.test(\"Check if User us logged in\", function () { \r",
+							"     var json = pm.response.json();\r",
+							"     pm.expect(json.status).to.equal(404);\r",
+							"});\r",
+							"pm.variables.get(\"variable_key\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:59558/api/carts/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "59558",
+					"path": [
+						"api",
+						"carts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Cart All",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n        \"userId\": 3,\n        \"productId\": 1,\n        \"quantity\": 1,\n        \"price\": 10\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:59558/api/carts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "59558",
+					"path": [
+						"api",
+						"carts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8160fd27-cbf9-46a8-a5bb-0e7f9db63560",
+						"exec": [
+							"pm.test(\"Check if User us logged in\", function () { \r",
+							"     var json = pm.response.json();\r",
+							"     pm.expect(json.status).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check if cart can be added\", function () { \r",
+							"     var json = pm.response.json();\r",
+							"     pm.expect(json.status).to.equal(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n        \"productId\": 1,\n        \"quantity\": 87,\n        \"price\": 10\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:59558/api/carts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "59558",
+					"path": [
+						"api",
+						"carts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Cart",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n        \"productId\": 1,\n        \"quantity\": 10,\n        \"price\": 10\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:59558/api/carts/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "59558",
+					"path": [
+						"api",
+						"carts",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "860259a5-fa20-4359-bd34-5d5fadf0d326",
+						"exec": [
+							"\r",
+							"pm.test(\"Delete Cart\", function () { \r",
+							"     var json = pm.response.json();\r",
+							"     pm.expect(json.status).to.equal(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n        \"userId\": 2,\n        \"productId\": 1,\n        \"quantity\": 8,\n        \"price\": 10\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:59558/api/carts/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "59558",
+					"path": [
+						"api",
+						"carts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Order",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n        \"userId\": 3,\n        \"productId\": 1,\n        \"quantity\": 1,\n        \"price\": 10\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:59558/api/orders/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "59558",
+					"path": [
+						"api",
+						"orders",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Order All",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "141568d3-9e88-4344-b2ec-643635a481ff",
+						"exec": [
+							"pm.test(\"Check if order can be retrieved\", function () { \r",
+							"     var json = pm.response.json();\r",
+							"     pm.expect(json.status).to.equal(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n        \"userId\": 3,\n        \"productId\": 1,\n        \"quantity\": 1,\n        \"price\": 10\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:59558/api/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "59558",
+					"path": [
+						"api",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Comment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "686bb110-586a-4ecf-bfff-936661ea9ef6",
+						"exec": [
+							"pm.test(\"Check if comment can be posted\", function () { \r",
+							"     var json = pm.response.json();\r",
+							"     pm.expect(json.status).to.equal(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n        \"productId\": 1,\n        \"rating\": 8,\n        \"image\": \" \",\n        \"commentDesc\": \"Great product\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:59558/api/comments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "59558",
+					"path": [
+						"api",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Comment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "686bb110-586a-4ecf-bfff-936661ea9ef6",
+						"exec": [
+							"pm.test(\"Check if comment can be posted\", function () { \r",
+							"     var json = pm.response.json();\r",
+							"     pm.expect(json.status).to.equal(400);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n        \"productId\": 1,\n        \"rating\": 8,\n        \"image\": \" \",\n        \"commentDesc\": \"Great\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:59558/api/comments/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "59558",
+					"path": [
+						"api",
+						"comments",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Comment All",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "686bb110-586a-4ecf-bfff-936661ea9ef6",
+						"exec": [
+							"pm.test(\"Check if comment can be read\", function () { \r",
+							"     var json = pm.response.json();\r",
+							"     pm.expect(json.status).to.equal(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\t\"userId\": 2,\n        \"productId\": 1,\n        \"rating\": 8,\n        \"image\": \" \",\n        \"commentDesc\": \"Great product\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:59558/api/comments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "59558",
+					"path": [
+						"api",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Comment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "686bb110-586a-4ecf-bfff-936661ea9ef6",
+						"exec": [
+							"pm.test(\"Check if comment can be read\", function () { \r",
+							"     var json = pm.response.json();\r",
+							"     pm.expect(json.status).to.equal(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\t\"userId\": 2,\n        \"productId\": 1,\n        \"rating\": 8,\n        \"image\": \" \",\n        \"commentDesc\": \"Great product\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:59558/api/comments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "59558",
+					"path": [
+						"api",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
